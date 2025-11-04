@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RevisAuto</title>
+  <link rel="stylesheet" href="./Styles/style.css">
+  <link rel="stylesheet" href="./Styles/cadastro-cliente.css">
+  <link rel="shortcut icon" href="./assets/logo.png">
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <img src="./assets/logo.png" alt="logo" class="logo" style="max-width:140px;margin-bottom:8px;">
+      <button class="menu-btn" onclick="showTab('clientes')">Clientes</button>
+      <button class="menu-btn" onclick="showTab('veiculos')">Veículos</button>
+      <button class="menu-btn" onclick="showTab('checklist')">Checklist</button>
+    </aside>
+
+    <main class="main-content">
+      <section id="tab-clientes" style="display:none;">
+        <h2>Cadastro de Cliente</h2>
+        <div class="cadastro-container">
+          
+          <form id="formCliente" onsubmit="salvarCliente(event)">
+            <input type="hidden" id="clientId">
+            
+            <div class="linha"><input id="nome" placeholder="Nome" style="flex:1;"></div>
+            
+            <div class="linha">
+              <select id="tipoPessoa" onchange="atualizarCamposPessoa()" style="flex:1;">
+                <option value="">Selecione o Tipo de Pessoa</option>
+                <option value="PF">Pessoa Física</option>
+                <option value="PJ">Pessoa Jurídica</option>
+              </select>
+            </div>
+
+            <div id="camposPessoaFisica" style="display:none;">
+              <div class="linha"><input id="cpf" placeholder="CPF"><input id="rg" placeholder="RG"></div>
+              <label for="">Data de Nascimento</label>
+              <div class="linha"><input id="dataNascimento"  type="date" placeholder="Data Nasc"></div>
+            </div>
+
+            <div id="camposPessoaJuridica" style="display:none;">
+              <div class="linha"><input id="cnpj" placeholder="CNPJ"><input id="inscEstadual" placeholder="Insc Estadual"></div>
+              <div class="linha"><input id="inscMunicipal" placeholder="Insc Municipal"></div>
+            </div>
+
+            <div class="linha"><input id="telNumero" placeholder="Telefone"><input id="telObs" placeholder="Obs"></div>
+            <div class="linha"><input id="celNumero" placeholder="Celular"><input id="celObs" placeholder="Obs"></div>
+            <div class="linha"><input id="email" placeholder="E-mail"><input id="emailObs" placeholder="Obs"></div>
+            <div class="linha"><input id="rua" placeholder="Rua"><input id="bairro" placeholder="Bairro"></div>
+            <div class="linha"><input id="cidade" placeholder="Cidade"><input id="uf" placeholder="UF" style="width:60px"><input id="cep" placeholder="CEP"></div>
+            
+            <div class="botoes" style="margin-top:12px;">
+              <button type="submit" class="salvar">Salvar</button>
+              <button type="button" class="alterar" onclick="alterarCliente()">Alterar</button>
+              <button type="button" class="deletar" onclick="deletarCliente()">Excluir</button>
+              <button type="button" class="limpar" onclick="limparFormCliente()">Limpar</button>
+            </div>
+          </form>
+          
+        </div>
+
+        <h3>Lista de Clientes</h3>
+        <ul id="listaClientes" style="list-style:none;padding:0;"></ul>
+      </section>
+
+      <section id="tab-veiculos" style="display:none;">
+        <h2>Cadastro de Veículo</h2>
+        <div class="cadastro-container">
+          <form id="formVeiculo" onsubmit="salvarVeiculo(event)">
+            <input type="hidden" id="vehicleId">
+            <div class="linha"><input id="placa" placeholder="Placa" style="width:180px"><input id="renavam" placeholder="Renavam"></div>
+            <div class="linha"><input id="marca" placeholder="Marca"><input id="modelo" placeholder="Modelo"></div>
+            <div class="linha"><input id="ano" placeholder="Ano" type="number" style="width:120px"><input id="cor" placeholder="Cor"></div>
+            <div class="linha"><input id="chassi" placeholder="Chassi"><input id="combustivel" placeholder="Combustível"></div>
+            <div class="linha"><input id="categoria" placeholder="Categoria"><input id="veiculoObs" placeholder="Observações"></div>
+            
+            <div class="linha">
+              <input id="donoNome" placeholder="Clique para selecionar o Dono" 
+                     onclick="abrirModalDono()" 
+                     readonly 
+                     style="cursor:pointer; flex:1;">
+            </div>
+
+            <div class="botoes" style="margin-top:12px;">
+              <button type="submit" class="salvar">Salvar</button>
+              <button type="button" class="alterar" onclick="alterarVeiculo()">Alterar</button>
+              <button type="button" class="deletar" onclick="deletarVeiculo()">Excluir</button>
+              <button type="button"  class ="limpar"   onclick="document.getElementById('formVeiculo').reset();document.getElementById('vehicleId').value='';">Limpar</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="modalBuscaDono" class="modal-busca">
+          <div class="modal-busca-content">
+            <h3>Selecionar Dono (Cliente)</h3>
+            <ul id="listaClientesDono" style="list-style:none; padding:0;">
+              </ul>
+            <button type="button" onclick="fecharModalDono()">Fechar</button>
+          </div>
+        </div>
+
+        <h3>Lista de Veículos</h3>
+        <ul id="listaVeiculos" style="list-style:none;padding:0;"></ul>
+      </section>
+
+      <section id="tab-checklist" style="display:none;">
+        <h2>Checklist de Entrada</h2>
+        <form id="formChecklist" onsubmit="enviarChecklist(event)">
+          
+          <input type="hidden" id="checkDonoId"> <div class="linha">
+            <input id="checkDono" placeholder="Clique para selecionar o Dono" 
+                   onclick="abrirModalDonoChecklist()" 
+                   readonly 
+                   style="cursor:pointer; flex:1;">
+            
+            <input id="checkPlaca" placeholder="Selecione o Veículo" 
+                   onclick="abrirModalVeiculoChecklist()" 
+                   readonly 
+                   style="cursor:pointer; flex:1;">
+          </div>
+          
+          <div class="linha" style="border-top: 1px solid #eee; padding-top: 12px; margin-top: 12px;">
+            <strong style="width: 100%;">Itens/Avarias (Marque o que está presente):</strong>
+          </div>
+          
+          <div class="linha" style="gap: 20px; flex-wrap: wrap;">
+            <div>
+              <input type="checkbox" id="checkMacaco" value="macaco">
+              <label for="checkMacaco">Macaco</label>
+            </div>
+            <div>
+              <input type="checkbox" id="checkEstepe" value="estepe">
+              <label for="checkEstepe">Estepe</label>
+            </div>
+            <div>
+              <input type="checkbox" id="checkManual" value="manual">
+              <label for="checkManual">Manual</label>
+            </div>
+            <div>
+              <input type="checkbox" id="checkChaveReserva" value="chave_reserva">
+              <label for="checkChaveReserva">Chave Reserva</label>
+            </div>
+            <div>
+              <input type="checkbox" id="checkArranhao" value="arranhao">
+              <label for="checkArranhao">Arranhão</label>
+            </div>
+            <div>
+              <input type="checkbox" id="checkTrincado" value="trincado_vidro">
+              <label for="checkTrincado">Trincado (Vidro)</label>
+            </div>
+            <div>
+              <input type="checkbox" id="checkAmassado" value="amassado">
+              <label for="checkAmassado">Amassado</label>
+            </div>
+            <div>
+              <input type="checkbox" id="checkOutros" value="outros">
+              <label for="checkOutros">Outros (ver obs.)</label>
+            </div>
+          </div>
+          <div class="linha"><textarea id="obsChecklist" placeholder="Observações" style="width:100%;height:80px"></textarea></div>
+          <div class="linha">
+            <label class="label-upload">Fotos (pré-visualização abaixo)</label>
+            <input id="fotosChecklist" type="file" accept="image/*" multiple onchange="previewImagens(this.files)">
+          </div>
+          <div id="previewChecklistImagens" style="margin-top:8px;"></div>
+          
+          <div style="margin-top:12px;">
+            <button type="submit" class="salvar">Salvar e Imprimir PDF</button>
+          </div>
+        </form>
+
+        <div id="modalBuscaDonoChecklist" class="modal-busca">
+          <div class="modal-busca-content">
+            <h3>Selecionar Dono (Cliente)</h3>
+            <ul id="listaClientesDonoChecklist" style="list-style:none; padding:0;">
+              </ul>
+            <button type="button" class="limpar" onclick="fecharModalDonoChecklist()">Fechar</button>
+          </div>
+        </div>
+
+        <div id="modalBuscaVeiculoChecklist" class="modal-busca">
+          <div class="modal-busca-content">
+            <h3>Selecionar Veículo</h3>
+            <ul id="listaVeiculosChecklist" style="list-style:none; padding:0;">
+              </ul>
+            <button type="button" class="limpar" onclick="fecharModalVeiculoChecklist()">Fechar</button>
+          </div>
+        </div>
+
+        <h3>Checklists Salvos</h3>
+        <ul id="listaChecklists" style="list-style:none;padding:0;"></ul>
+      </section>
+    </main>
+  </div>
+
+  <div id="print-container"></div>
+
+  <script src="./js/script.js"></script>
+  <script src="./js/checklist.js"></script>
+</body>
+</html>

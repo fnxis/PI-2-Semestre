@@ -1,0 +1,102 @@
+:root {
+  --accent: #d1ba7b;
+  --accent-dark: #6d531d;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--accent);
+  color: #222;
+}
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+.sidebar {
+  width: 210px;
+  background: rgba(0,0,0,0.08);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sidebar .logo { max-width: 100%; }
+.sidebar-title { color: var(--accent-dark); margin: 8px 0 20px 0; font-weight: 700; }
+.menu-btn {
+  width: 160px;
+  height: 40px;
+  border-radius: 10px;
+  margin: 8px 0;
+  background: #f1da73;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+.main-content {
+  flex: 1;
+  padding: 24px;
+}
+
+.botoes button.salvar { background: #00e676; color: #111; border: none; padding: 8px 14px; border-radius: 8px; }
+.botoes button.alterar { background: #ffeb3b; color: #111; border: none; padding: 8px 14px; border-radius: 8px; }
+.botoes button.deletar { background: #ff1744; color: #fff; border: none; padding: 8px 14px; border-radius: 8px; }
+.botoes button.limpar { background: #9e9e9e; color: #fff; border: none; padding: 8px 14px; border-radius: 8px; }
+
+.preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-start;
+}
+.preview-thumb {
+  border-radius: 6px;
+  border: 2px solid #d1ba7b;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+#print-container {
+  display: none;
+}
+
+@media print {
+  body > *:not(#print-container) {
+    display: none;
+  }
+
+  #print-container {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  #print-container h2 {
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+  }
+  
+  #print-container ul {
+    list-style-type: disc;
+    padding-left: 30px;
+  }
+  
+  #print-container li {
+    margin-bottom: 5px;
+  }
+  
+  #print-container img {
+    max-width: 120px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    break-inside: avoid; 
+  }
+  
+  #print-container .fotos-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

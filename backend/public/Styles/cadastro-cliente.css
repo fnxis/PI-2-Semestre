@@ -1,0 +1,41 @@
+.cadastro-container {
+  background: #fff;
+  border-radius: 10px;
+  padding: 22px 24px;
+  max-width: 820px;
+  margin: 20px auto;
+  box-shadow: 0 0 8px #0002;
+}
+.tabs { display: flex; border-bottom: 2px solid #eee; margin-bottom: 16px; }
+.tab-btn {
+  background: #f1f1f1;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px 8px 0 0;
+  margin-right: 8px;
+  cursor: pointer;
+}
+.tab-btn.active { background: #fff; font-weight: bold; }
+.form-cadastro { width: 100%; }
+.linha { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; }
+.linha input, .linha select, textarea {
+  padding: 8px 10px;
+  border: 2px solid #222;
+  border-radius: 8px;
+  font-size: 1em;
+}
+.linha input[type="file"] { padding: 4px; }
+.contatos-label { font-weight: bold; width: 100%; margin-top: 6px; }
+.search-btn { padding: 8px 10px; border-radius: 6px; background: #f5f5f5; border: 2px solid #222; cursor: pointer; }
+.label-upload { font-weight: bold; display:block; width:100%; }
+.modal-busca {
+  display: none;
+  position: fixed; z-index: 50; left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.22); align-items: center; justify-content: center;
+}
+.modal-busca-content {
+  background: #fff; border-radius: 12px; padding: 22px; min-width: 320px; max-width: 90vw; box-shadow: 0 4px 28px #0003;
+}
+.modal-busca-content ul { list-style: none; padding-left: 0; max-height: 240px; overflow-y: auto; margin: 6px 0 0 0; }
+.modal-busca-content li { padding: 8px; border-radius: 6px; cursor: pointer; }
+.modal-busca-content li:hover { background: #ffe7a3; }

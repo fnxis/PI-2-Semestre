@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RevisAuto - Login</title>
+    <link rel="stylesheet" href="./Styles/style.css">
+    <link rel="stylesheet" href="./Styles/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <form id="formLogin" onsubmit="handleLogin(event)">
+            <img src="./assets/logo.png" alt="Logo RevisAuto" class="login-logo">
+            <h2>Login do Sistema</h2>
+            
+            <div class="login-field">
+                <label for="usuario">Usuário</label>
+                <input type="text" id="usuario" required>
+            </div>
+            
+            <div class="login-field">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" required>
+            </div>
+            
+            <p id="loginError" class="login-error"></p>
+            
+            <button type="submit" class="login-button">Entrar</button>
+        </form>
+    </div>
+
+    <script>
+        async function handleLogin(e) {
+            e.preventDefault();
+            const usuario = document.getElementById('usuario').value;
+            const senha = document.getElementById('senha').value;
+            const errorEl = document.getElementById('loginError');
+            errorEl.textContent = '';
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ usuario, senha })
+                });
+
+                if (response.ok) {
+                    window.location.href = '/app';
+                } else {
+                    errorEl.textContent = 'Usuário ou senha inválidos.';
+                }
+            } catch (err) {
+                errorEl.textContent = 'Erro de conexão com o servidor.';
+            }
+        }
+    </script>
+</body>
+</html>
