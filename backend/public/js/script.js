@@ -43,27 +43,27 @@ async function salvarCliente(e) {
   const id = document.getElementById('clientId').value || null;
   
   const payload = {
-    nome: document.getElementById('nome').value || '',
-    cpf: document.getElementById('cpf').value || '',
-    rg: document.getElementById('rg').value || '',
-    cnpj: document.getElementById('cnpj').value || '',
-    data_nascimento: document.getElementById('dataNascimento').value || null,
-    tipo_pessoa: document.getElementById('tipoPessoa').value || '',
-    insc_estadual: document.getElementById('inscEstadual').value || '',
-    insc_municipal: document.getElementById('inscMunicipal').value || '',
-    data_cadastro: null,
-    telefone: document.getElementById('telNumero').value || '',
-    telefone_obs: document.getElementById('telObs').value || '',
-    celular: document.getElementById('celNumero').value || '',
-    celular_obs: document.getElementById('celObs').value || '',
-    email: document.getElementById('email').value || '',
-    email_obs: document.getElementById('emailObs').value || '',
-    rua: document.getElementById('rua').value || '',
-    bairro: document.getElementById('bairro').value || '',
-    cidade: document.getElementById('cidade').value || '',
-    uf: document.getElementById('uf').value || '',
-    cep: document.getElementById('cep').value || ''
-  };
+  nome: document.getElementById('nome').value || null, 
+  cpf: document.getElementById('cpf').value || null,
+  rg: document.getElementById('rg').value || null,
+  cnpj: document.getElementById('cnpj').value || null,
+  data_nascimento: document.getElementById('dataNascimento').value || null,
+  tipo_pessoa: document.getElementById('tipoPessoa').value || null, 
+  insc_estadual: document.getElementById('inscEstadual').value || null,
+  insc_municipal: document.getElementById('inscMunicipal').value || null,
+  data_cadastro: null,
+  telefone: document.getElementById('telNumero').value || null,
+  telefone_obs: document.getElementById('telObs').value || null,
+  celular: document.getElementById('celNumero').value || null,
+  celular_obs: document.getElementById('celObs').value || null,
+  email: document.getElementById('email').value || null,
+  email_obs: document.getElementById('emailObs').value || null,
+  rua: document.getElementById('rua').value || null,
+  bairro: document.getElementById('bairro').value || null,
+  cidade: document.getElementById('cidade').value || null,
+  uf: document.getElementById('uf').value || null,
+  cep: document.getElementById('cep').value || null
+};
 
   if (!payload.data_nascimento) delete payload.data_nascimento;
   if (!payload.data_cadastro) delete payload.data_cadastro;
@@ -152,7 +152,7 @@ async function fetchClients() {
     lista.innerHTML = '';
     clients.forEach(c => {
       const li = document.createElement('li');
-      li.textContent = c.nome + (c.cpf ? ' — ' + c.cpf : '');
+      li.textContent = c.nome + (c.cpf ? ' — ' + c.cpf : '')+(c.cnpj ? ' — ' + c.cnpj : '');
       li.style.padding = '6px';
       li.style.cursor = 'pointer';
       li.onclick = () => selecionarClientePorId(c.id_cliente);
@@ -176,7 +176,7 @@ async function fetchClients() {
     listaDonoChecklist.innerHTML = '';
     clients.forEach(c => {
       const li = document.createElement('li');
-      li.textContent = c.nome + (c.cpf ? ' — ' + c.cpf : '');
+      li.textContent = c.nome + (c.cpf ? ' — ' + c.cpf : '')+(c.cnpj ? ' — ' + c.cnpj : '');
       li.style.padding = '6px';
       li.style.cursor = 'pointer';
       li.onclick = () => selecionarDonoChecklist(c.id_cliente, c.nome); 
@@ -295,19 +295,19 @@ async function salvarVeiculo(e) {
   const id = document.getElementById('vehicleId').value || null;
   const donoDataset = document.getElementById('donoNome')?.dataset?.clienteId;
   
-  const payload = {
-    placa: document.getElementById('placa').value || '',
-    renavam: document.getElementById('renavam').value || '',
-    marca: document.getElementById('marca').value || '',
-    modelo: document.getElementById('modelo').value || '',
-    ano: document.getElementById('ano').value || null,
-    cor: document.getElementById('cor').value || '',
-    chassi: document.getElementById('chassi').value || '',
-    combustivel: document.getElementById('combustivel').value || '',
-    categoria: document.getElementById('categoria').value || '',
-    observacoes: document.getElementById('veiculoObs').value || '',
-    cliente_id: donoDataset ? Number(donoDataset) : null
-  };
+const payload = {
+  placa: document.getElementById('placa').value || null,
+  renavam: document.getElementById('renavam').value || null,
+  marca: document.getElementById('marca').value || null,
+  modelo: document.getElementById('modelo').value || null,
+  ano: document.getElementById('ano').value || null,
+  cor: document.getElementById('cor').value || null,
+  chassi: document.getElementById('chassi').value || null,
+  combustivel: document.getElementById('combustivel').value || null,
+  categoria: document.getElementById('categoria').value || null,
+  observacoes: document.getElementById('veiculoObs').value || null,
+  fk_id_cliente: donoDataset ? Number(donoDataset) : null
+};
 
   try {
     let url = `${API_BASE}/veiculos`;

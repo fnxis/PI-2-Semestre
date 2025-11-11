@@ -22,8 +22,8 @@ function previewImagens(fileList) {
       img.src = URL.createObjectURL(f);
       img.alt = f.name;
       img.className = 'preview-thumb';
-      img.style.maxWidth = '140px';
-      img.style.maxHeight = '100px';
+      img.style.maxWidth = '480px';
+      img.style.maxHeight = '480px';
       img.style.objectFit = 'cover';
       img.style.marginRight = '8px';
       img.style.marginBottom = '8px';

@@ -71,11 +71,11 @@ app.get('/api/clientes', checkAuth, async (req, res) => {
       SELECT 
         id_cliente, nome, tipo_pessoa, cpf, rg, data_nascimento,
         cnpj, insc_estadual, insc_municipal, telefone,
-        obs_telefone AS telefone_obs, 
+        telefone_obs, 
         celular,
-        obs_celular AS celular_obs, 
+        celular_obs, 
         email,
-        obs_email AS email_obs, 
+        email_obs, 
         rua, bairro, cidade, uf, cep, data_cadastro
       FROM cad_cliente 
       ORDER BY nome
