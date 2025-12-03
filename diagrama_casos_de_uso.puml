@@ -1,0 +1,70 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor Administrador as Admin
+actor Técnico as Tecnico
+actor Cliente as Cliente
+actor "Sistema de E-mail" as Email
+
+rectangle "Checklist para AutoCenter" {
+  (Autenticar Usuário) as UC01
+  (Gerenciar Usuários) as UC02
+  (Cadastrar Cliente) as UC03
+  (Cadastrar Veículo) as UC04
+  (Iniciar Checklist) as UC05
+  (Preencher Checklist) as UC06
+  (Anexar Fotos) as UC07
+  (Finalizar Checklist) as UC08
+  (Gerar/Imprimir Checklist) as UC09
+  (Consultar Histórico) as UC10
+  (Buscar e Filtrar) as UC11
+  (Exportar Dados / Backup) as UC12
+  (Enviar Notificação) as UC13
+  (Reabrir Checklist) as UC14
+}
+
+' Atores para casos de uso
+Admin --> UC01
+Tecnico --> UC01
+Admin --> UC02
+Admin --> UC12
+Admin --> UC14
+
+Tecnico --> UC03
+Tecnico --> UC04
+Tecnico --> UC05
+Tecnico --> UC06
+Tecnico --> UC07
+Tecnico --> UC08
+Tecnico --> UC09
+Tecnico --> UC10
+Tecnico --> UC11
+
+Cliente --> UC09
+
+Email --> UC13
+
+' Relações entre casos de uso
+UC05 ..> UC03 : <<include>> 
+UC05 ..> UC04 : <<include>>
+
+UC06 ..> UC07 : <<include>>
+
+UC08 ..> UC06 : <<include>>
+UC08 ..> UC09 : <<include>>
+
+UC13 .> UC08 : <<extend>>  ' envio opcional/estendido na finalização
+
+UC14 ..> UC08 : <<include>> ' reabertura requer referência ao checklist finalizado
+
+' Notas explicativas
+note right of UC13
+  Envio de e-mail é opcional e configurável.
+end note
+
+note left of UC12
+  Exportações restritas a Administradores.
+end note
+@enduml
